@@ -56,7 +56,6 @@ def import_codes ():
     with conn.cursor() as cur:
       cur.execute("CREATE TABLE IF NOT EXISTS public.rates (Id serial PRIMARY KEY, Date VARCHAR (50), Currency1 VARCHAR (3), Currency2 VARCHAR (3), Rate FLOAT);")
       cur.executemany("INSERT INTO public.rates (Date, Currency1, Currency2, Rate) VALUES(%s, %s, %s, %s);", res)
-      cur.executemany("INSERT INTO public.rates (Date, Currency1, Currency2, Rate) VALUES(%s, %s, %s, %s);", res)
       conn.commit()
       cur.close()
 
