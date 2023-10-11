@@ -103,7 +103,7 @@ services:
     restart: always
   
   db:
-    image: postgres
+    image: postgres:latest  
     networks:
       - clickhouse
     ports:
@@ -114,11 +114,14 @@ services:
       POSTGRES_DB: test
     volumes:
       - db_vol:/var/lib/postgresql/data
+      - ./db/init_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: always
-
+  
   clickhouse:
-    image: clickhouse/clickhouse-server:latest
     container_name: clickhouse_server
+    build:
+      context: ./clickhouse
+      dockerfile: ClickhouseDockerfile
     depends_on:
       - db
     ulimits:
@@ -127,6 +130,7 @@ services:
           hard: 262144 
     ports:  
       - "8123:8123"
+      - "9000:9000"
     volumes:
       - "clickhouse-data:/var/lib/clickhouse"
 

@@ -1,0 +1,6 @@
+FROM postgres:13
+ENV POSTGRES_PASSWORD=password
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_DB=test
+COPY init_scripts/init.sql /docker-entrypoint-initdb.d/init.sql
+
